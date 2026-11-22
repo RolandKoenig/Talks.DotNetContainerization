@@ -2,10 +2,14 @@
 # Build image
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
-COPY . .
 
+# Restore first for improved cache usage
+COPY "SampleServiceWithDocker/SampleServiceWithDocker.csproj" "SampleServiceWithDocker/SampleServiceWithDocker.csproj"
+RUN dotnet restore "SampleServiceWithDocker/SampleServiceWithDocker.csproj"
+
+# Build the application
+COPY . .
 WORKDIR "/src/SampleServiceWithDockerChiseled"
-RUN dotnet restore "SampleServiceWithDockerChiseled.csproj"
 RUN dotnet publish "SampleServiceWithDockerChiseled.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 #####################################
