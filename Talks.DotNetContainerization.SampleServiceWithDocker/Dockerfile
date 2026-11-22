@@ -1,6 +1,6 @@
 #####################################
 # Build image
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 COPY . .
 RUN dotnet restore "Talks.DotNetContainerization.SampleServiceWithDocker/Talks.DotNetContainerization.SampleServiceWithDocker.csproj"
@@ -13,7 +13,7 @@ RUN dotnet publish "Talks.DotNetContainerization.SampleServiceWithDocker.csproj"
 #####################################
 # Runtime image
 ## Configure OS
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS final
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 EXPOSE 80
 
 ## Create application directory
