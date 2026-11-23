@@ -20,5 +20,6 @@ EXPOSE 80
 
 ## Copy application and define entrypoint
 WORKDIR /app
+USER app
 COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "SampleServiceWithDockerExt.dll"]
