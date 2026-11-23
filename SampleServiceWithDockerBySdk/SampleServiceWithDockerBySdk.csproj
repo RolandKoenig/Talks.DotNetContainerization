@@ -17,4 +17,7 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="11.0.1" />
     </ItemGroup>
 
+    <ItemGroup>
+        <Content Update="appsettings.Development.json" CopyToPublishDirectory="Never" />
+    </ItemGroup>
 </Project>
