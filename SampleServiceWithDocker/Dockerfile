@@ -1,6 +1,6 @@
 #####################################
 # Build image
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:11.0 AS build
 WORKDIR /src
 COPY . .
 
@@ -11,7 +11,7 @@ RUN dotnet publish "SampleServiceWithDocker.csproj" -c Release -o /app/publish /
 #####################################
 # Runtime image
 ## Configure OS
-FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:11.0 AS final
 EXPOSE 80
 
 ## Copy application and define entrypoint

@@ -1,24 +1,24 @@
 #####################################
 # Build image
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:11.0 AS build
 WORKDIR /src
 
 # Restore first for improved cache usage
-COPY "SampleServiceWithDocker/SampleServiceWithDocker.csproj" "SampleServiceWithDocker/SampleServiceWithDocker.csproj"
-RUN dotnet restore "SampleServiceWithDocker/SampleServiceWithDocker.csproj"
+COPY "SampleServiceWithDockerExt/SampleServiceWithDockerExt.csproj" "SampleServiceWithDockerExt/SampleServiceWithDockerExt.csproj"
+RUN dotnet restore "SampleServiceWithDockerExt/SampleServiceWithDockerExt.csproj"
 
 # Build the application
 COPY . .
-WORKDIR "/src/SampleServiceWithDocker"
-RUN dotnet publish "SampleServiceWithDocker.csproj" -c Release -o /app/publish /p:UseAppHost=false
+WORKDIR "/src/SampleServiceWithDockerExt"
+RUN dotnet publish "SampleServiceWithDockerExt.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 #####################################
 # Runtime image
 ## Configure OS
-FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine AS final
+FROM mcr.microsoft.com/dotnet/aspnet:11.0-alpine AS final
 EXPOSE 80
 
 ## Copy application and define entrypoint
 WORKDIR /app
 COPY --from=build /app/publish .
-ENTRYPOINT ["dotnet", "SampleServiceWithDockerChiseled.dll"]
+ENTRYPOINT ["dotnet", "SampleServiceWithDockerExt.dll"]

@@ -1,11 +1,11 @@
 #####################################
 # Build image
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:11.0 AS build
 WORKDIR /src
 
 # Restore first for improved cache usage
-COPY "SampleServiceWithDocker/SampleServiceWithDocker.csproj" "SampleServiceWithDocker/SampleServiceWithDocker.csproj"
-RUN dotnet restore "SampleServiceWithDocker/SampleServiceWithDocker.csproj"
+COPY "SampleServiceWithDockerChiseled/SampleServiceWithDockerChiseled.csproj" "SampleServiceWithDockerChiseled/SampleServiceWithDockerChiseled.csproj"
+RUN dotnet restore "SampleServiceWithDockerChiseled/SampleServiceWithDockerChiseled.csproj"
 
 # Build the application
 COPY . .
@@ -15,7 +15,7 @@ RUN dotnet publish "SampleServiceWithDockerChiseled.csproj" -c Release -o /app/p
 #####################################
 # Runtime image
 ## Configure OS
-FROM mcr.microsoft.com/dotnet/aspnet:10.0-noble-chiseled AS final
+FROM mcr.microsoft.com/dotnet/aspnet:11.0-resolute-chiseled AS final
 EXPOSE 80
 
 ## Copy application and define entrypoint
