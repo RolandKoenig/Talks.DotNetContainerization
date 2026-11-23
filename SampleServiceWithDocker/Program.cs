@@ -1,3 +1,5 @@
+using Talks.DotNetContainerization.SampleService.Middlewares;
+
 namespace Talks.DotNetContainerization.SampleService;
 
 public static class Program
@@ -15,6 +17,7 @@ public static class Program
         var app = builder.Build();
         app.UseSwagger();
         app.UseSwaggerUI();
+        app.UseMiddleware<RequestLoggingMiddleware>();
         app.MapControllers();
         app.Run();
     }
